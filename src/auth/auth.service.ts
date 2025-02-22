@@ -1,17 +1,25 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import { DatabaseService } from 'src/database/database.service';
+import { SignupDTO } from './dto/auth.dto';
 
 @Injectable()
 export class AuthService {
-  /**
-   * Authenticates a user and returns a success message.
-   *
-   * @remarks
-   * This function is responsible for handling user login.
-   * It does not perform any actual authentication logic.
-   *
-   * @returns A success message indicating that the user has been logged in.
-   */
-  login() {
-    return { msg: 'User login successful', success: true };
-  }
+	constructor(private readonly databaseService: DatabaseService) {}
+
+	login() {
+		return { msg: 'User login successful', success: true };
+	}
+
+	async register(body: SignupDTO) {
+		// Implement user registration logic
+		try {
+			await this.databaseService.user.create({ data: body });
+			return { msg: 'User registration successful', success: true };
+		} catch {
+			return new HttpException(
+				'User registration failed',
+				HttpStatus.INTERNAL_SERVER_ERROR,
+			);
+		}
+	}
 }
