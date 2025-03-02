@@ -12,7 +12,7 @@ export class AuthService {
 
 	async signToken(userId: string, email: string): Promise<string> {
 		const payload = { userId, email };
-		return await this.jwtService.signAsync(payload, {expiresIn: '15m', secret: process.env.JWT_SECRET});
+		return await this.jwtService.signAsync(payload, {expiresIn: '1d', secret: process.env.JWT_SECRET});
 	}
 
 	async login(body: LoginDTO) {

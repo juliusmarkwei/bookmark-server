@@ -18,7 +18,7 @@ model User {
   id        String   @id @default(uuid())
   email     String   @unique
   password  String
-  fullName String
+  fullName  String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   bookmarks  Bookmark[]
